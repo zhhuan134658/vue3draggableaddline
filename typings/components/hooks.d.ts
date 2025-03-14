@@ -52,7 +52,7 @@ export declare function initLimitSizeAndMethods(props: any, parentSize: ReturnTy
 export declare function initDraggableContainer(containerRef: Ref<HTMLElement | undefined>, containerProps: ReturnType<typeof initState>, limitProps: ReturnType<typeof initLimitSizeAndMethods>, draggable: Ref<boolean>, emit: any, containerProvider: ContainerProvider | null, parentSize: ReturnType<typeof initParent>, OFFSET: any): {
     containerRef: Ref<HTMLElement>;
 };
-export declare function initResizeHandle(containerProps: ReturnType<typeof initState>, limitProps: ReturnType<typeof initLimitSizeAndMethods>, parentSize: ReturnType<typeof initParent>, props: any, emit: any): {
+export declare function initResizeHandle(containerProps: ReturnType<typeof initState>, limitProps: ReturnType<typeof initLimitSizeAndMethods>, parentSize: ReturnType<typeof initParent>, props: any, emit: any, containerProvider: any): {
     handlesFiltered: import("vue").ComputedRef<ResizingHandle[]>;
     resizeHandleDown: (e: HandleEvent, handleType: ResizingHandle) => void;
 };

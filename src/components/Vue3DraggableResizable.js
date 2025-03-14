@@ -178,7 +178,7 @@ var VueDraggableResizable = vue_1.defineComponent({
         var parentSize = hooks_1.initParent(containerRef);
         var limitProps = hooks_1.initLimitSizeAndMethods(props, parentSize, containerProps);
         hooks_1.initDraggableContainer(containerRef, containerProps, limitProps, vue_1.toRef(props, 'draggable'), emit, containerProvider, parentSize, props.OFFSET);
-        var resizeHandle = hooks_1.initResizeHandle(containerProps, limitProps, parentSize, props, emit);
+        var resizeHandle = hooks_1.initResizeHandle(containerProps, limitProps, parentSize, props, emit, containerProvider);
         hooks_1.watchProps(props, limitProps);
         return __assign(__assign(__assign(__assign({ containerRef: containerRef,
             containerProvider: containerProvider }, containerProps), parentSize), limitProps), resizeHandle);

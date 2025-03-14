@@ -192,7 +192,8 @@ const VueDraggableResizable = defineComponent({
       limitProps,
       parentSize,
       props,
-      emit
+      emit,
+      containerProvider
     );
     watchProps(props, limitProps);
     return {

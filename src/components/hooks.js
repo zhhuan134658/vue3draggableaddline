@@ -335,7 +335,9 @@ function initDraggableContainer(containerRef, containerProps, limitProps, dragga
     return { containerRef: containerRef };
 }
 exports.initDraggableContainer = initDraggableContainer;
-function initResizeHandle(containerProps, limitProps, parentSize, props, emit) {
+function initResizeHandle(containerProps, limitProps, parentSize, props, emit, containerProvider // 新增参数，用于设置匹配线
+) {
+    var id = containerProps.id;
     var setWidth = limitProps.setWidth, setHeight = limitProps.setHeight, setLeft = limitProps.setLeft, setTop = limitProps.setTop;
     var width = containerProps.width, height = containerProps.height, left = containerProps.left, top = containerProps.top, aspectRatio = containerProps.aspectRatio;
     var setResizing = containerProps.setResizing, setResizingHandle = containerProps.setResizingHandle, setResizingMaxWidth = containerProps.setResizingMaxWidth, setResizingMaxHeight = containerProps.setResizingMaxHeight, setResizingMinWidth = containerProps.setResizingMinWidth, setResizingMinHeight = containerProps.setResizingMinHeight;
@@ -393,6 +395,50 @@ function initResizeHandle(containerProps, limitProps, parentSize, props, emit) {
             w: width.value,
             h: height.value
         });
+        var newreferenceLineMap = utils_1.getReferenceLineMap(containerProvider, parentSize, id);
+        // 新增：计算和设置对齐辅助线
+        if (containerProvider && newreferenceLineMap) {
+            console.log('1111');
+            var widgetSelfLine = {
+                col: [
+                    left.value,
+                    left.value + width.value / 2,
+                    left.value + width.value,
+                ],
+                row: [
+                    top.value,
+                    top.value + height.value / 2,
+                    top.value + height.value,
+                ]
+            };
+            var matchedLine = {
+                row: widgetSelfLine.row,
+                //   .map((i, index) => {
+                //     let match = null;
+                //     Object.values(newreferenceLineMap.row).forEach((referItem: any) => {
+                //       if (i >= referItem.min && i <= referItem.max) {
+                //         match = referItem.value;
+                //       }
+                //     });
+                //     if (match !== null) {
+                //       //   if (index === 0) {
+                //       //     setTop(match);
+                //       //   } else if (index === 1) {
+                //       //     setTop(Math.floor(match - height.value / 2));
+                //       //   } else if (index === 2) {
+                //       //     setTop(Math.floor(match - height.value));
+                //       //   }
+                //     }
+                //     return match;
+                //   })
+                //   .filter((i) => i !== null),
+                col: widgetSelfLine.col
+            };
+            containerProvider.setMatchedLine(matchedLine);
+        }
+        else {
+            console.log('0000');
+        }
     };
     var resizeHandleUp = function () {
         emit('resize-end', {
@@ -407,10 +453,12 @@ function initResizeHandle(containerProps, limitProps, parentSize, props, emit) {
         setResizingMaxHeight(Infinity);
         setResizingMinWidth(props.minW);
         setResizingMinHeight(props.minH);
-        // document.documentElement.removeEventListener('mousemove', resizeHandleDrag)
-        // document.documentElement.removeEventListener('mouseup', resizeHandleUp)
         utils_1.removeEvent(documentElement, MOVE_HANDLES, resizeHandleDrag);
         utils_1.removeEvent(documentElement, UP_HANDLES, resizeHandleUp);
+        // 新增：停止缩放时，将匹配线设置为 null
+        if (containerProvider) {
+            containerProvider.setMatchedLine(null);
+        }
     };
     var resizeHandleDown = function (e, handleType) {
         if (!props.resizable)
@@ -472,14 +520,10 @@ function initResizeHandle(containerProps, limitProps, parentSize, props, emit) {
             w: width.value,
             h: height.value
         });
-        // document.documentElement.addEventListener('mousemove', resizeHandleDrag)
-        // document.documentElement.addEventListener('mouseup', resizeHandleUp)
         utils_1.addEvent(documentElement, MOVE_HANDLES, resizeHandleDrag);
         utils_1.addEvent(documentElement, UP_HANDLES, resizeHandleUp);
     };
     vue_1.onUnmounted(function () {
-        // document.documentElement.removeEventListener('mouseup', resizeHandleDrag)
-        // document.documentElement.removeEventListener('mousemove', resizeHandleUp)
         utils_1.removeEvent(documentElement, UP_HANDLES, resizeHandleUp);
         utils_1.removeEvent(documentElement, MOVE_HANDLES, resizeHandleDrag);
     });
