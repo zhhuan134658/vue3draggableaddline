@@ -17,13 +17,14 @@
         <div class="parent">
             <DraggableContainer>
                 <Vue3DraggableResizable :initW="40" :initH="80" v-model:x="x" v-model:y="y" v-model:w="w" v-model:h="h"
-                    :OFFSET="OFFSET" v-model:active="active" :draggable="draggable" :resizable="resizable"
-                    :parent="true" :disabledX="false" :disabledW="false" :disabledH="false" :disabledY="false"
-                    classNameHandle="my-handle" @activated="print('activated')" @deactivated="print('deactivated')"
-                    @drag-start="print('drag-start', $event)" @resize-start="print('resize-start', $event)"
-                    @dragging="print('dragging', $event)" @resizing="print('resizing', $event)"
-                    @drag-end="print('drag-end', $event)" @resize-end="print('resize-end', $event)">
-                    This is a test example
+                    :OFFSET="OFFSET" :THRESHOLD="THRESHOLD" v-model:active="active" :draggable="draggable"
+                    :resizable="resizable" :parent="true" :disabledX="false" :disabledW="false" :disabledH="false"
+                    :disabledY="false" classNameHandle="my-handle" @activated="print('activated')"
+                    @deactivated="print('deactivated')" @drag-start="print('drag-start', $event)"
+                    @resize-start="print('resize-start', $event)" @dragging="print('dragging', $event)"
+                    @resizing="print('resizing', $event)" @drag-end="print('drag-end', $event)"
+                    @resize-end="print('resize-end', $event)">
+                    This is a test example111
                 </Vue3DraggableResizable>
                 <Vue3DraggableResizable :initW="40" :initH="80" v-model:x="sx" v-model:y="sy" v-model:w="sw"
                     v-model:h="sh" :OFFSET="sOFFSET" v-model:active="sactive" :draggable="sdraggable"
@@ -57,7 +58,8 @@ export default defineComponent({
             active: false,
             draggable: true,
             resizable: true,
-            OFFSET: 20,
+            OFFSET: 50,    //偏移量
+            THRESHOLD: 50,//吸附灵敏度、吸附阈值
             sx: 100,
             sy: 100,
             sh: 100,

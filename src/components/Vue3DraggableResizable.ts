@@ -34,6 +34,11 @@ const VdrProps = {
     type: Number,
     default: 10,
   },
+  THRESHOLD: {
+    //吸附灵敏度、吸附阈值
+    type: Number,
+    default: 5,
+  },
   initW: {
     type: Number,
     default: null,

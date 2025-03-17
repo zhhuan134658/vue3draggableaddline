@@ -478,9 +478,53 @@ export function initResizeHandle(
       parentSize,
       id
     );
+    console.log('props', props);
+
+    // 新增：吸附检测逻辑
+    const THRESHOLD = props.THRESHOLD; // 吸附阈值
+    const positionStore = containerProvider.getPositionStore(id);
+    const currentLeft = left.value;
+    const currentTop = top.value;
+    const currentRight = left.value + width.value;
+    const currentBottom = top.value + height.value;
+
+    Object.values(positionStore).forEach((pos: any) => {
+      const otherLeft = pos.x;
+      const otherTop = pos.y;
+      const otherRight = pos.x + pos.w;
+      const otherBottom = pos.y + pos.h;
+
+      // 左侧吸附
+      if (Math.abs(currentLeft - otherLeft) <= THRESHOLD) {
+        setLeft(otherLeft);
+      } else if (Math.abs(currentLeft - otherRight) <= THRESHOLD) {
+        setLeft(otherRight);
+      }
+
+      // 右侧吸附
+      if (Math.abs(currentRight - otherLeft) <= THRESHOLD) {
+        setWidth(otherLeft - left.value);
+      } else if (Math.abs(currentRight - otherRight) <= THRESHOLD) {
+        setWidth(otherRight - left.value);
+      }
+
+      // 顶部吸附
+      if (Math.abs(currentTop - otherTop) <= THRESHOLD) {
+        setTop(otherTop);
+      } else if (Math.abs(currentTop - otherBottom) <= THRESHOLD) {
+        setTop(otherBottom);
+      }
+
+      // 底部吸附
+      if (Math.abs(currentBottom - otherTop) <= THRESHOLD) {
+        setHeight(otherTop - top.value);
+      } else if (Math.abs(currentBottom - otherBottom) <= THRESHOLD) {
+        setHeight(otherBottom - top.value);
+      }
+    });
     // 新增：计算和设置对齐辅助线
     if (containerProvider && newreferenceLineMap) {
-      console.log('1111');
+      //   console.log('1111');
 
       const widgetSelfLine = {
         col: [
@@ -538,7 +582,7 @@ export function initResizeHandle(
       };
       containerProvider.setMatchedLine(matchedLine);
     } else {
-      console.log('0000');
+      //   console.log('0000');
     }
   };
 
