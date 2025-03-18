@@ -59,7 +59,8 @@ export default defineComponent({
             draggable: true,
             resizable: true,
             OFFSET: 50,    //偏移量
-            THRESHOLD: 50,//吸附灵敏度、吸附阈值
+            THRESHOLD: 5,//吸附灵敏度、吸附阈值
+
             sx: 100,
             sy: 100,
             sh: 100,

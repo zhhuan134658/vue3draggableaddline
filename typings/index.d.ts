@@ -13,6 +13,7 @@ declare const _default: ({
             draggable: boolean;
             resizable: boolean;
             OFFSET: number;
+            THRESHOLD: number;
             initW: number;
             initH: number;
             disabledX: boolean;
@@ -39,6 +40,7 @@ declare const _default: ({
             draggable: boolean;
             resizable: boolean;
             OFFSET: number;
+            THRESHOLD: number;
             initW: number;
             initH: number;
             disabledX: boolean;
@@ -75,6 +77,7 @@ declare const _default: ({
             draggable: boolean;
             resizable: boolean;
             OFFSET: number;
+            THRESHOLD: number;
             initW: number;
             initH: number;
             disabledX: boolean;
@@ -150,6 +153,7 @@ declare const _default: ({
             draggable: boolean;
             resizable: boolean;
             OFFSET: number;
+            THRESHOLD: number;
             initW: number;
             initH: number;
             disabledX: boolean;
@@ -180,6 +184,7 @@ declare const _default: ({
         draggable: boolean;
         resizable: boolean;
         OFFSET: number;
+        THRESHOLD: number;
         initW: number;
         initH: number;
         disabledX: boolean;
@@ -259,6 +264,7 @@ declare const _default: ({
     draggable: boolean;
     resizable: boolean;
     OFFSET: number;
+    THRESHOLD: number;
     initW: number;
     initH: number;
     disabledX: boolean;
@@ -334,6 +340,7 @@ declare const _default: ({
     draggable: boolean;
     resizable: boolean;
     OFFSET: number;
+    THRESHOLD: number;
     initW: number;
     initH: number;
     disabledX: boolean;
@@ -366,6 +373,7 @@ declare const _default: ({
             draggable: boolean;
             resizable: boolean;
             OFFSET: number;
+            THRESHOLD: number;
             initW: number;
             initH: number;
             disabledX: boolean;
@@ -392,6 +400,7 @@ declare const _default: ({
             draggable: boolean;
             resizable: boolean;
             OFFSET: number;
+            THRESHOLD: number;
             initW: number;
             initH: number;
             disabledX: boolean;
@@ -428,6 +437,7 @@ declare const _default: ({
             draggable: boolean;
             resizable: boolean;
             OFFSET: number;
+            THRESHOLD: number;
             initW: number;
             initH: number;
             disabledX: boolean;
@@ -503,6 +513,7 @@ declare const _default: ({
             draggable: boolean;
             resizable: boolean;
             OFFSET: number;
+            THRESHOLD: number;
             initW: number;
             initH: number;
             disabledX: boolean;
@@ -533,6 +544,7 @@ declare const _default: ({
         draggable: boolean;
         resizable: boolean;
         OFFSET: number;
+        THRESHOLD: number;
         initW: number;
         initH: number;
         disabledX: boolean;
@@ -612,6 +624,7 @@ declare const _default: ({
     draggable: boolean;
     resizable: boolean;
     OFFSET: number;
+    THRESHOLD: number;
     initW: number;
     initH: number;
     disabledX: boolean;
@@ -687,6 +700,7 @@ declare const _default: ({
     draggable: boolean;
     resizable: boolean;
     OFFSET: number;
+    THRESHOLD: number;
     initW: number;
     initH: number;
     disabledX: boolean;

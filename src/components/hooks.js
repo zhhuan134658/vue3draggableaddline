@@ -396,9 +396,51 @@ function initResizeHandle(containerProps, limitProps, parentSize, props, emit, c
             h: height.value
         });
         var newreferenceLineMap = utils_1.getReferenceLineMap(containerProvider, parentSize, id);
+        console.log('props', props);
+        // 新增：吸附检测逻辑
+        var THRESHOLD = props.THRESHOLD; // 吸附阈值
+        var positionStore = containerProvider.getPositionStore(id);
+        var currentLeft = left.value;
+        var currentTop = top.value;
+        var currentRight = left.value + width.value;
+        var currentBottom = top.value + height.value;
+        Object.values(positionStore).forEach(function (pos) {
+            var otherLeft = pos.x;
+            var otherTop = pos.y;
+            var otherRight = pos.x + pos.w;
+            var otherBottom = pos.y + pos.h;
+            // 左侧吸附
+            if (Math.abs(currentLeft - otherLeft) <= THRESHOLD) {
+                setLeft(otherLeft);
+            }
+            else if (Math.abs(currentLeft - otherRight) <= THRESHOLD) {
+                setLeft(otherRight);
+            }
+            // 右侧吸附
+            if (Math.abs(currentRight - otherLeft) <= THRESHOLD) {
+                setWidth(otherLeft - left.value);
+            }
+            else if (Math.abs(currentRight - otherRight) <= THRESHOLD) {
+                setWidth(otherRight - left.value);
+            }
+            // 顶部吸附
+            if (Math.abs(currentTop - otherTop) <= THRESHOLD) {
+                setTop(otherTop);
+            }
+            else if (Math.abs(currentTop - otherBottom) <= THRESHOLD) {
+                setTop(otherBottom);
+            }
+            // 底部吸附
+            if (Math.abs(currentBottom - otherTop) <= THRESHOLD) {
+                setHeight(otherTop - top.value);
+            }
+            else if (Math.abs(currentBottom - otherBottom) <= THRESHOLD) {
+                setHeight(otherBottom - top.value);
+            }
+        });
         // 新增：计算和设置对齐辅助线
         if (containerProvider && newreferenceLineMap) {
-            console.log('1111');
+            //   console.log('1111');
             var widgetSelfLine = {
                 col: [
                     left.value,
@@ -437,7 +479,7 @@ function initResizeHandle(containerProps, limitProps, parentSize, props, emit, c
             containerProvider.setMatchedLine(matchedLine);
         }
         else {
-            console.log('0000');
+            //   console.log('0000');
         }
     };
     var resizeHandleUp = function () {

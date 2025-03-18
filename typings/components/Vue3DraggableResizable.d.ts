@@ -7,6 +7,10 @@ declare const VueDraggableResizable: import("vue").DefineComponent<{
         type: NumberConstructor;
         default: number;
     };
+    THRESHOLD: {
+        type: NumberConstructor;
+        default: number;
+    };
     initW: {
         type: NumberConstructor;
         default: any;
@@ -162,6 +166,7 @@ declare const VueDraggableResizable: import("vue").DefineComponent<{
     draggable: boolean;
     resizable: boolean;
     OFFSET: number;
+    THRESHOLD: number;
     initW: number;
     initH: number;
     disabledX: boolean;
@@ -188,6 +193,7 @@ declare const VueDraggableResizable: import("vue").DefineComponent<{
     draggable: boolean;
     resizable: boolean;
     OFFSET: number;
+    THRESHOLD: number;
     initW: number;
     initH: number;
     disabledX: boolean;
