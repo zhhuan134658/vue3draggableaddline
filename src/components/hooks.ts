@@ -111,6 +111,10 @@ export function initParent(containerRef: Ref<HTMLElement | undefined>) {
   onMounted(() => {
     if (containerRef.value && containerRef.value.parentElement) {
       const { width, height } = getElSize(containerRef.value.parentElement);
+
+      console.log('containerRef', containerRef.value.parentElement);
+      console.log('parentWidth', width, height);
+
       parentWidth.value = width;
       parentHeight.value = height;
     }
@@ -443,6 +447,7 @@ export function initResizeHandle(
     if (props.lockAspectRatio) {
       deltaX = Math.abs(deltaX);
       deltaY = deltaX * tmpAspectRatio;
+
       if (idx0 === 't') {
         if (_deltaX < 0 || (idx1 === 'm' && _deltaY < 0)) {
           deltaX = -deltaX;
@@ -455,18 +460,42 @@ export function initResizeHandle(
         }
       }
     }
+    // ---------------
+    // 计算偏移量的倍数
+    const multipleX = Math.round(deltaX / props.OFFSET);
+    const multipleY = Math.round(deltaY / props.OFFSET);
+
+    // 计算新的宽度和高度变化量
+    const newDeltaX = multipleX * props.OFFSET;
+    const newDeltaY = multipleY * props.OFFSET;
+
     if (idx0 === 't') {
-      setHeight(lstH - deltaY);
+      setHeight(lstH - newDeltaY);
       setTop(lstY - (height.value - lstH));
     } else if (idx0 === 'b') {
-      setHeight(lstH + deltaY);
+      setHeight(lstH + newDeltaY);
     }
     if (idx1 === 'l') {
-      setWidth(lstW - deltaX);
+      setWidth(lstW - newDeltaX);
       setLeft(lstX - (width.value - lstW));
     } else if (idx1 === 'r') {
-      setWidth(lstW + deltaX);
+      setWidth(lstW + newDeltaX);
     }
+
+    // ----------------
+    // if (idx0 === 't') {
+    //   setHeight(lstH - deltaY);
+    //   setTop(lstY - (height.value - lstH));
+    // } else if (idx0 === 'b') {
+    //   setHeight(lstH + deltaY);
+    // }
+    // if (idx1 === 'l') {
+    //   setWidth(lstW - deltaX);
+    //   setLeft(lstX - (width.value - lstW));
+    // } else if (idx1 === 'r') {
+    //   setWidth(lstW + deltaX);
+    // }
+    //------------------
     emit('resizing', {
       x: left.value,
       y: top.value,

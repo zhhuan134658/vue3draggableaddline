@@ -14,7 +14,10 @@
         </div>
         <div>active:{{ active }}<br /></div>
         <div @click="setStep">100</div>
-        <div class="parent">
+        <div class="parent" :style="{
+            width: `${totalWidth}px`,
+            height: `${totalHeight}px`,
+        }">
             <DraggableContainer>
                 <Vue3DraggableResizable :initW="40" :initH="80" v-model:x="x" v-model:y="y" v-model:w="w" v-model:h="h"
                     :OFFSET="OFFSET" :THRESHOLD="THRESHOLD" v-model:active="active" :draggable="draggable"
@@ -51,6 +54,9 @@ export default defineComponent({
     components: { DraggableContainer, Vue3DraggableResizable },
     data() {
         return {
+            totalWidth: 500,
+            totalHeight: 500,
+
             x: 100,
             y: 100,
             h: 100,
@@ -77,15 +83,14 @@ export default defineComponent({
             // console.log(val, e)
         },
         setStep() {
-            this.OFFSET = 100;
+            this.totalWidth += 100;
         },
     },
 });
 </script>
 <style lang="less" scoped>
 .parent {
-    width: 800px;
-    height: 800px;
+
     // position: absolute;
     // top: 100px;
     // left: 200px;

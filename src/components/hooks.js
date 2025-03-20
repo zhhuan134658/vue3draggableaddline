@@ -375,20 +375,41 @@ function initResizeHandle(containerProps, limitProps, parentSize, props, emit, c
                 }
             }
         }
+        // ---------------
+        // 计算偏移量的倍数
+        var multipleX = Math.round(deltaX / props.OFFSET);
+        var multipleY = Math.round(deltaY / props.OFFSET);
+        // 计算新的宽度和高度变化量
+        var newDeltaX = multipleX * props.OFFSET;
+        var newDeltaY = multipleY * props.OFFSET;
         if (idx0 === 't') {
-            setHeight(lstH - deltaY);
+            setHeight(lstH - newDeltaY);
             setTop(lstY - (height.value - lstH));
         }
         else if (idx0 === 'b') {
-            setHeight(lstH + deltaY);
+            setHeight(lstH + newDeltaY);
         }
         if (idx1 === 'l') {
-            setWidth(lstW - deltaX);
+            setWidth(lstW - newDeltaX);
             setLeft(lstX - (width.value - lstW));
         }
         else if (idx1 === 'r') {
-            setWidth(lstW + deltaX);
+            setWidth(lstW + newDeltaX);
         }
+        // ----------------
+        // if (idx0 === 't') {
+        //   setHeight(lstH - deltaY);
+        //   setTop(lstY - (height.value - lstH));
+        // } else if (idx0 === 'b') {
+        //   setHeight(lstH + deltaY);
+        // }
+        // if (idx1 === 'l') {
+        //   setWidth(lstW - deltaX);
+        //   setLeft(lstX - (width.value - lstW));
+        // } else if (idx1 === 'r') {
+        //   setWidth(lstW + deltaX);
+        // }
+        //------------------
         emit('resizing', {
             x: left.value,
             y: top.value,
