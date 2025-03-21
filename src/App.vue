@@ -14,7 +14,7 @@
         </div>
         <div>active:{{ active }}<br /></div>
         <div @click="setStep">100</div>
-        <div class="parent" :style="{
+        <div class="parent" id="mydiv" :style="{
             width: `${totalWidth}px`,
             height: `${totalHeight}px`,
         }">
@@ -59,8 +59,8 @@ export default defineComponent({
 
             x: 100,
             y: 100,
-            h: 100,
-            w: 100,
+            h: 200,
+            w: 200,
             active: false,
             draggable: true,
             resizable: true,
@@ -77,13 +77,17 @@ export default defineComponent({
             sOFFSET: 20,
         };
     },
-    mounted() { },
+    mounted() {
+
+    },
     methods: {
         print(val, e) {
             // console.log(val, e)
         },
         setStep() {
             this.totalWidth += 100;
+            this.totalHeight += 100;
+
         },
     },
 });

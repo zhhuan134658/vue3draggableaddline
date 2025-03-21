@@ -104,21 +104,43 @@ export function initState(props: any, emit: any) {
     setLeft: (val: number) => setLeft(Math.floor(val)),
   };
 }
-
+// 防抖函数
+function debounce(func: Function, delay: number) {
+  let timer: ReturnType<typeof setTimeout> | null = null;
+  return function(...args: any[]) {
+    if (timer) {
+      clearTimeout(timer);
+    }
+    timer = setTimeout(() => {
+      func(...args);
+    }, delay);
+  };
+}
 export function initParent(containerRef: Ref<HTMLElement | undefined>) {
   const parentWidth = ref(0);
   const parentHeight = ref(0);
   onMounted(() => {
     if (containerRef.value && containerRef.value.parentElement) {
       const { width, height } = getElSize(containerRef.value.parentElement);
-
-      console.log('containerRef', containerRef.value.parentElement);
-      console.log('parentWidth', width, height);
-
       parentWidth.value = width;
       parentHeight.value = height;
     }
+    // const myDiv = document.getElementById('mydiv');
+    const myDiv = containerRef.value?.parentElement;
+    if (myDiv) {
+      const resizeObserver = new ResizeObserver(
+        debounce((entries: any) => {
+          for (const entry of entries) {
+            const { width, height } = entry.contentRect;
+            parentWidth.value = width;
+            parentHeight.value = height;
+          }
+        }, 300) // 防抖延迟 300ms，可以根据需要调整
+      );
+      resizeObserver.observe(myDiv);
+    }
   });
+
   return {
     parentWidth,
     parentHeight,
@@ -174,6 +196,10 @@ export function initLimitSizeAndMethods(
     }),
     maxTop: computed(() => {
       return props.parent ? parentHeight.value - height.value : Infinity;
+    }),
+    // 新增 maxX 属性
+    maxX: computed(() => {
+      return props.parent ? parentWidth.value - width.value : Infinity;
     }),
   };
   const limitMethods = {
