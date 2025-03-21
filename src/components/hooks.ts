@@ -128,16 +128,18 @@ export function initParent(containerRef: Ref<HTMLElement | undefined>) {
     // const myDiv = document.getElementById('mydiv');
     const myDiv = containerRef.value?.parentElement;
     if (myDiv) {
-      const resizeObserver = new ResizeObserver(
-        debounce((entries: any) => {
-          for (const entry of entries) {
-            const { width, height } = entry.contentRect;
-            parentWidth.value = width;
-            parentHeight.value = height;
-          }
-        }, 300) // 防抖延迟 300ms，可以根据需要调整
-      );
-      resizeObserver.observe(myDiv);
+      if (typeof window !== 'undefined') {
+        const resizeObserver = new ResizeObserver(
+          debounce((entries: any) => {
+            for (const entry of entries) {
+              const { width, height } = entry.contentRect;
+              parentWidth.value = width;
+              parentHeight.value = height;
+            }
+          }, 300) // 防抖延迟 300ms，可以根据需要调整
+        );
+        resizeObserver.observe(myDiv);
+      }
     }
   });
 

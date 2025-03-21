@@ -111,6 +111,7 @@ declare const _default: ({
             minTop: import("vue").ComputedRef<number>;
             maxLeft: import("vue").ComputedRef<number>;
             maxTop: import("vue").ComputedRef<number>;
+            maxX: import("vue").ComputedRef<number>;
             parentWidth: import("vue").Ref<number>;
             parentHeight: import("vue").Ref<number>;
             id: string;
@@ -218,6 +219,7 @@ declare const _default: ({
         minTop: import("vue").ComputedRef<number>;
         maxLeft: import("vue").ComputedRef<number>;
         maxTop: import("vue").ComputedRef<number>;
+        maxX: import("vue").ComputedRef<number>;
         parentWidth: import("vue").Ref<number>;
         parentHeight: import("vue").Ref<number>;
         id: string;
@@ -298,6 +300,7 @@ declare const _default: ({
     minTop: import("vue").ComputedRef<number>;
     maxLeft: import("vue").ComputedRef<number>;
     maxTop: import("vue").ComputedRef<number>;
+    maxX: import("vue").ComputedRef<number>;
     parentWidth: import("vue").Ref<number>;
     parentHeight: import("vue").Ref<number>;
     id: string;
@@ -471,6 +474,7 @@ declare const _default: ({
             minTop: import("vue").ComputedRef<number>;
             maxLeft: import("vue").ComputedRef<number>;
             maxTop: import("vue").ComputedRef<number>;
+            maxX: import("vue").ComputedRef<number>;
             parentWidth: import("vue").Ref<number>;
             parentHeight: import("vue").Ref<number>;
             id: string;
@@ -578,6 +582,7 @@ declare const _default: ({
         minTop: import("vue").ComputedRef<number>;
         maxLeft: import("vue").ComputedRef<number>;
         maxTop: import("vue").ComputedRef<number>;
+        maxX: import("vue").ComputedRef<number>;
         parentWidth: import("vue").Ref<number>;
         parentHeight: import("vue").Ref<number>;
         id: string;
@@ -658,6 +663,7 @@ declare const _default: ({
     minTop: import("vue").ComputedRef<number>;
     maxLeft: import("vue").ComputedRef<number>;
     maxTop: import("vue").ComputedRef<number>;
+    maxX: import("vue").ComputedRef<number>;
     parentWidth: import("vue").Ref<number>;
     parentHeight: import("vue").Ref<number>;
     id: string;

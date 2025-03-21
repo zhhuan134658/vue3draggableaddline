@@ -91,14 +91,47 @@ function initState(props, emit) {
     };
 }
 exports.initState = initState;
+// 防抖函数
+function debounce(func, delay) {
+    var timer = null;
+    return function () {
+        var args = [];
+        for (var _i = 0; _i < arguments.length; _i++) {
+            args[_i] = arguments[_i];
+        }
+        if (timer) {
+            clearTimeout(timer);
+        }
+        timer = setTimeout(function () {
+            func.apply(void 0, args);
+        }, delay);
+    };
+}
 function initParent(containerRef) {
     var parentWidth = vue_1.ref(0);
     var parentHeight = vue_1.ref(0);
     vue_1.onMounted(function () {
+        var _a;
         if (containerRef.value && containerRef.value.parentElement) {
-            var _a = utils_1.getElSize(containerRef.value.parentElement), width = _a.width, height = _a.height;
+            var _b = utils_1.getElSize(containerRef.value.parentElement), width = _b.width, height = _b.height;
             parentWidth.value = width;
             parentHeight.value = height;
+        }
+        // const myDiv = document.getElementById('mydiv');
+        var myDiv = (_a = containerRef.value) === null || _a === void 0 ? void 0 : _a.parentElement;
+        if (myDiv) {
+            if (typeof window !== 'undefined') {
+                var resizeObserver = new ResizeObserver(debounce(function (entries) {
+                    for (var _i = 0, entries_1 = entries; _i < entries_1.length; _i++) {
+                        var entry = entries_1[_i];
+                        var _a = entry.contentRect, width = _a.width, height = _a.height;
+                        parentWidth.value = width;
+                        parentHeight.value = height;
+                    }
+                }, 300) // 防抖延迟 300ms，可以根据需要调整
+                );
+                resizeObserver.observe(myDiv);
+            }
         }
     });
     return {
@@ -143,6 +176,10 @@ function initLimitSizeAndMethods(props, parentSize, containerProps) {
         }),
         maxTop: vue_1.computed(function () {
             return props.parent ? parentHeight.value - height.value : Infinity;
+        }),
+        // 新增 maxX 属性
+        maxX: vue_1.computed(function () {
+            return props.parent ? parentWidth.value - width.value : Infinity;
         })
     };
     var limitMethods = {

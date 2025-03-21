@@ -124,6 +124,7 @@ declare const VueDraggableResizable: import("vue").DefineComponent<{
     minTop: import("vue").ComputedRef<number>;
     maxLeft: import("vue").ComputedRef<number>;
     maxTop: import("vue").ComputedRef<number>;
+    maxX: import("vue").ComputedRef<number>;
     parentWidth: Ref<number>;
     parentHeight: Ref<number>;
     id: string;

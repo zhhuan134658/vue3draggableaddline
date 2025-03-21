@@ -48,6 +48,7 @@ export declare function initLimitSizeAndMethods(props: any, parentSize: ReturnTy
     minTop: import("vue").ComputedRef<number>;
     maxLeft: import("vue").ComputedRef<number>;
     maxTop: import("vue").ComputedRef<number>;
+    maxX: import("vue").ComputedRef<number>;
 };
 export declare function initDraggableContainer(containerRef: Ref<HTMLElement | undefined>, containerProps: ReturnType<typeof initState>, limitProps: ReturnType<typeof initLimitSizeAndMethods>, draggable: Ref<boolean>, emit: any, containerProvider: ContainerProvider | null, parentSize: ReturnType<typeof initParent>, OFFSET: any): {
     containerRef: Ref<HTMLElement>;
