@@ -1,4 +1,8 @@
 declare const _default: import("vue").DefineComponent<{
+    allLines: {
+        type: ArrayConstructor;
+        default: any[];
+    };
     disabled: {
         type: BooleanConstructor;
         default: boolean;
@@ -33,6 +37,7 @@ declare const _default: import("vue").DefineComponent<{
     adsorbParent: boolean;
     adsorbCols: unknown[];
     adsorbRows: unknown[];
+    allLines: unknown[];
     referenceLineVisible: boolean;
     referenceLineColor: string;
 } & {}>, {
@@ -40,6 +45,7 @@ declare const _default: import("vue").DefineComponent<{
     adsorbParent: boolean;
     adsorbCols: unknown[];
     adsorbRows: unknown[];
+    allLines: unknown[];
     referenceLineVisible: boolean;
     referenceLineColor: string;
 }>;

@@ -12,6 +12,10 @@ var utils_1 = require("./utils");
 exports["default"] = vue_1.defineComponent({
     name: 'DraggableContainer',
     props: {
+        allLines: {
+            type: Array,
+            "default": []
+        },
         disabled: {
             type: Boolean,
             "default": false
@@ -102,10 +106,35 @@ exports["default"] = vue_1.defineComponent({
         }
     },
     render: function () {
+        var connectionLine = this.allLines.map(function (line) {
+            return vue_1.h('svg', {
+                "class": 'connection-line',
+                width: '100%',
+                height: '100%'
+            }, [
+                vue_1.h('line', {
+                    x1: line.start.x,
+                    y1: line.start.y,
+                    x2: line.end.x,
+                    y2: line.end.y,
+                    stroke: 'red',
+                    strokeWidth: 1
+                }),
+            ]);
+        });
+        var distanceLabels = this.allLines.map(function (line, index) {
+            return vue_1.h('div', {
+                "class": 'distance-label',
+                style: {
+                    top: line.position.y + "px",
+                    left: line.position.x + "px"
+                }
+            }, [line.distance]);
+        });
         return vue_1.h('div', {
             style: { width: '100%', height: '100%', position: 'relative' }
         }, __spreadArrays([
             this.$slots["default"] && this.$slots["default"]()
-        ], this.renderReferenceLine()));
+        ], this.renderReferenceLine(), connectionLine, distanceLabels));
     }
 });

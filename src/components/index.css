@@ -1,3 +1,20 @@
+.connection-line {
+  position: absolute;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  border: 1px solid #000;
+}
+
+.distance-label {
+  position: absolute;
+  background-color: rgba(255, 255, 255, 1);
+  color: red;
+  font-size: 10px;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  white-space: nowrap;
+}
 .vdr-container {
   position: absolute;
   border: 1px solid transparent;
