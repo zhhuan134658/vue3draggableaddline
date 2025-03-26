@@ -164,7 +164,7 @@ export function getStartAndEnd(currentItem: any, items: any) {
       if (!isOverlapping) {
         const otherRect = items[i];
         const { start, end } = calculateLinePoints(currentRect, otherRect);
-        console.log('12121', currentRect, otherRect);
+        // console.log('12121', currentRect, otherRect);
 
         const distance = calculateDistance(start, end);
         const position = {
@@ -180,7 +180,7 @@ export function getStartAndEnd(currentItem: any, items: any) {
       }
     }
   });
-  console.log('2313232', newLines);
+  //   console.log('2313232', newLines);
 
   return newLines;
 }

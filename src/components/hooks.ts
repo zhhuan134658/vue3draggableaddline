@@ -514,20 +514,48 @@ export function initResizeHandle(
     const multipleY = Math.round(deltaY / props.OFFSET);
 
     // 计算新的宽度和高度变化量
-    const newDeltaX = multipleX * props.OFFSET;
-    const newDeltaY = multipleY * props.OFFSET;
-
-    if (idx0 === 't') {
-      setHeight(lstH - newDeltaY);
-      setTop(lstY - (height.value - lstH));
-    } else if (idx0 === 'b') {
-      setHeight(lstH + newDeltaY);
-    }
-    if (idx1 === 'l') {
-      setWidth(lstW - newDeltaX);
-      setLeft(lstX - (width.value - lstW));
-    } else if (idx1 === 'r') {
-      setWidth(lstW + newDeltaX);
+    let newDeltaX = multipleX * props.OFFSET;
+    let newDeltaY = multipleY * props.OFFSET;
+    // 处理不同句柄位置的拖动逻辑
+    switch (`${idx0}${idx1}`) {
+      case 'tl': // 左上角
+        setWidth(lstW - newDeltaX);
+        setLeft(lstX - (width.value - lstW));
+        setHeight(lstH - newDeltaY);
+        setTop(lstY - (height.value - lstH));
+        break;
+      case 'tm': // 顶部中间
+        newDeltaX = 0;
+        setHeight(lstH - newDeltaY);
+        setTop(lstY - (height.value - lstH));
+        break;
+      case 'tr': // 右上角
+        setWidth(lstW + newDeltaX);
+        setHeight(lstH - newDeltaY);
+        setTop(lstY - (height.value - lstH));
+        break;
+      case 'ml': // 左侧中间
+        newDeltaY = 0;
+        setWidth(lstW - newDeltaX);
+        setLeft(lstX - (width.value - lstW));
+        break;
+      case 'mr': // 右侧中间
+        newDeltaY = 0;
+        setWidth(lstW + newDeltaX);
+        break;
+      case 'bl': // 左下角
+        setWidth(lstW - newDeltaX);
+        setLeft(lstX - (width.value - lstW));
+        setHeight(lstH + newDeltaY);
+        break;
+      case 'bm': // 底部中间
+        newDeltaX = 0;
+        setHeight(lstH + newDeltaY);
+        break;
+      case 'br': // 右下角
+        setWidth(lstW + newDeltaX);
+        setHeight(lstH + newDeltaY);
+        break;
     }
 
     // ----------------
@@ -555,7 +583,7 @@ export function initResizeHandle(
       parentSize,
       id
     );
-    console.log('props', props);
+    // console.log('props', props);
 
     // 新增：吸附检测逻辑
     const THRESHOLD = props.THRESHOLD; // 吸附阈值
@@ -688,18 +716,22 @@ export function initResizeHandle(
     if (!props.resizable) return;
     e.stopPropagation();
     setResizingHandle(handleType);
+
     setResizing(true);
     idx0 = handleType[0];
     idx1 = handleType[1];
-    if (aspectRatio.value) {
-      if (['tl', 'tm', 'ml', 'bl'].includes(handleType)) {
-        idx0 = 't';
-        idx1 = 'l';
-      } else {
-        idx0 = 'b';
-        idx1 = 'r';
-      }
-    }
+
+    // if (aspectRatio.value) {
+    //   console.log('12313131213', idx0, idx1);
+
+    //   if (['tl', 'tm', 'ml', 'bl'].includes(handleType)) {
+    //     idx0 = 't';
+    //     idx1 = 'l';
+    //   } else {
+    //     idx0 = 'b';
+    //     idx1 = 'r';
+    //   }
+    // }
     let minHeight = props.minH as number;
     let minWidth = props.minW as number;
     if (minHeight / minWidth > aspectRatio.value) {

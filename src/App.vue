@@ -46,6 +46,7 @@
           :disabledH="false"
           :disabledY="false"
           classNameHandle="my-handle"
+          :handles="['tl', 'tr', 'bl', 'br', 'tm', 'mr', 'ml', 'bm']"
           @activated="print('activated')"
           @deactivated="print('deactivated')"
           @drag-start="print('drag-start', $event)"
