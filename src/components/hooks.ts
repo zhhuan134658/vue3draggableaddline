@@ -270,7 +270,7 @@ function getPosition(e: HandleEvent) {
     return [e.pageX, e.pageY];
   }
 }
-
+const BORDER_WIDTH = 20; // 定义边框宽度
 export function initDraggableContainer(
   containerRef: Ref<HTMLElement | undefined>,
   containerProps: ReturnType<typeof initState>,
@@ -391,15 +391,35 @@ export function initDraggableContainer(
 
   const handleDown = (e: HandleEvent) => {
     if (!draggable.value) return;
-    setDragging(true);
-    lstX = x.value;
-    lstY = y.value;
-    lstPageX = getPosition(e)[0];
-    lstPageY = getPosition(e)[1];
-    addEvent(documentElement, MOVE_HANDLES, handleDrag);
-    addEvent(documentElement, UP_HANDLES, handleUp);
-    if (containerProvider && !containerProvider.disabled.value) {
-      referenceLineMap = getReferenceLineMap(containerProvider, parentSize, id);
+    const el = containerRef.value;
+    if (!el) return;
+
+    const rect = el.getBoundingClientRect();
+    const { clientX, clientY } = e as MouseEvent;
+
+    // 判断鼠标点击位置是否在边框上
+    const isOnBorder =
+      (clientX >= rect.left && clientX <= rect.left + BORDER_WIDTH) ||
+      (clientX >= rect.right - BORDER_WIDTH && clientX <= rect.right) ||
+      (clientY >= rect.top && clientY <= rect.top + BORDER_WIDTH) ||
+      (clientY >= rect.bottom - BORDER_WIDTH && clientY <= rect.bottom);
+    console.log('isOnBorder', isOnBorder);
+
+    if (isOnBorder) {
+      setDragging(true);
+      lstX = x.value;
+      lstY = y.value;
+      lstPageX = getPosition(e)[0];
+      lstPageY = getPosition(e)[1];
+      addEvent(documentElement, MOVE_HANDLES, handleDrag);
+      addEvent(documentElement, UP_HANDLES, handleUp);
+      if (containerProvider && !containerProvider.disabled.value) {
+        referenceLineMap = getReferenceLineMap(
+          containerProvider,
+          parentSize,
+          id
+        );
+      }
     }
   };
 

@@ -131,8 +131,8 @@ export default defineComponent({
       this.totalHeight += 100;
     },
     //拖拽中
-    onDragging(currentItem) {
-      this.allLines = getStartAndEnd(currentItem, this.items);
+    onDragging(currentIndex) {
+      this.allLines = getStartAndEnd(currentIndex, this.items);
     },
   },
 });

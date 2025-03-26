@@ -28,6 +28,12 @@
   border-color: #000;
   border-style: solid;
 }
+.vdr-container.draggable:hover {
+  /* background-color: #000; */
+}
+.vdr-container:not(.draggable):hover {
+  cursor: default; /* 不可拖拽区域鼠标样式 */
+}
 .vdr-handle {
   box-sizing: border-box;
   position: absolute;
