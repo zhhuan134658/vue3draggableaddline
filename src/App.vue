@@ -26,7 +26,7 @@
         height: `${totalHeight}px`,
       }"
     >
-      <DraggableContainer :allLines="allLines">
+      <DraggableContainer :allLines="allLines" :showRedLine="showRedLine">
         <Vue3DraggableResizable
           v-for="(item, index) in items"
           :initW="40"
@@ -37,6 +37,7 @@
           v-model:h="item.height"
           :OFFSET="item.OFFSET"
           :THRESHOLD="item.THRESHOLD"
+          :SCALE="50"
           v-model:active="item.active"
           :draggable="item.draggable"
           :resizable="item.resizable"
@@ -82,6 +83,7 @@ export default defineComponent({
   components: { DraggableContainer, Vue3DraggableResizable },
   data() {
     return {
+      showRedLine: false, //是否显示吸附线
       totalWidth: 500,
       totalHeight: 500,
       items: [
@@ -133,6 +135,7 @@ export default defineComponent({
     },
     //拖拽中
     onDragging(currentIndex) {
+      this.showRedLine = true;
       this.allLines = getStartAndEnd(currentIndex, this.items);
     },
   },

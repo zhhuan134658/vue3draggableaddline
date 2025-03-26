@@ -209,6 +209,9 @@ function initLimitSizeAndMethods(props, parentSize, containerProps) {
         },
         setstepNum: function (val) {
             return props.OFFSET ? props.OFFSET : val;
+        },
+        setScale: function (val) {
+            return props.SCALE ? props.SCALE / 100 : val / 100;
         }
     };
     return __assign(__assign({}, limitProps), limitMethods);
@@ -225,10 +228,11 @@ function getPosition(e) {
         return [e.pageX, e.pageY];
     }
 }
-function initDraggableContainer(containerRef, containerProps, limitProps, draggable, emit, containerProvider, parentSize, OFFSET) {
+var BORDER_WIDTH = 20; // 定义边框宽度
+function initDraggableContainer(containerRef, containerProps, limitProps, draggable, emit, containerProvider, parentSize, OFFSET, SCALE) {
     var x = containerProps.left, y = containerProps.top, w = containerProps.width, h = containerProps.height, dragging = containerProps.dragging, id = containerProps.id;
     var setDragging = containerProps.setDragging, setEnable = containerProps.setEnable, setResizing = containerProps.setResizing, setResizingHandle = containerProps.setResizingHandle;
-    var setTop = limitProps.setTop, setLeft = limitProps.setLeft, setstepNum = limitProps.setstepNum;
+    var setTop = limitProps.setTop, setLeft = limitProps.setLeft, setstepNum = limitProps.setstepNum, setScale = limitProps.setScale;
     var lstX = 0;
     var lstY = 0;
     var lstPageX = 0;
@@ -271,8 +275,8 @@ function initDraggableContainer(containerRef, containerProps, limitProps, dragga
         var multipleX = Math.round(deltaX / setstepNum(OFFSET));
         var multipleY = Math.round(deltaY / setstepNum(OFFSET));
         // 计算新的位置
-        var newLeft = lstX + multipleX * setstepNum(OFFSET);
-        var newTop = lstY + multipleY * setstepNum(OFFSET);
+        var newLeft = lstX + (multipleX * setstepNum(OFFSET)) / setScale(SCALE);
+        var newTop = lstY + (multipleY * setstepNum(OFFSET)) / setScale(SCALE);
         if (referenceLineMap !== null) {
             var widgetSelfLine = {
                 col: [newLeft, newLeft + w.value / 2, newLeft + w.value],
@@ -331,15 +335,28 @@ function initDraggableContainer(containerRef, containerProps, limitProps, dragga
     var handleDown = function (e) {
         if (!draggable.value)
             return;
-        setDragging(true);
-        lstX = x.value;
-        lstY = y.value;
-        lstPageX = getPosition(e)[0];
-        lstPageY = getPosition(e)[1];
-        utils_1.addEvent(documentElement, MOVE_HANDLES, handleDrag);
-        utils_1.addEvent(documentElement, UP_HANDLES, handleUp);
-        if (containerProvider && !containerProvider.disabled.value) {
-            referenceLineMap = utils_1.getReferenceLineMap(containerProvider, parentSize, id);
+        var el = containerRef.value;
+        if (!el)
+            return;
+        var rect = el.getBoundingClientRect();
+        var _a = e, clientX = _a.clientX, clientY = _a.clientY;
+        // 判断鼠标点击位置是否在边框上
+        var isOnBorder = (clientX >= rect.left && clientX <= rect.left + BORDER_WIDTH) ||
+            (clientX >= rect.right - BORDER_WIDTH && clientX <= rect.right) ||
+            (clientY >= rect.top && clientY <= rect.top + BORDER_WIDTH) ||
+            (clientY >= rect.bottom - BORDER_WIDTH && clientY <= rect.bottom);
+        console.log('isOnBorder', isOnBorder);
+        if (isOnBorder) {
+            setDragging(true);
+            lstX = x.value;
+            lstY = y.value;
+            lstPageX = getPosition(e)[0];
+            lstPageY = getPosition(e)[1];
+            utils_1.addEvent(documentElement, MOVE_HANDLES, handleDrag);
+            utils_1.addEvent(documentElement, UP_HANDLES, handleUp);
+            if (containerProvider && !containerProvider.disabled.value) {
+                referenceLineMap = utils_1.getReferenceLineMap(containerProvider, parentSize, id);
+            }
         }
     };
     vue_1.watch(dragging, function (cur, pre) {
@@ -419,19 +436,46 @@ function initResizeHandle(containerProps, limitProps, parentSize, props, emit, c
         // 计算新的宽度和高度变化量
         var newDeltaX = multipleX * props.OFFSET;
         var newDeltaY = multipleY * props.OFFSET;
-        if (idx0 === 't') {
-            setHeight(lstH - newDeltaY);
-            setTop(lstY - (height.value - lstH));
-        }
-        else if (idx0 === 'b') {
-            setHeight(lstH + newDeltaY);
-        }
-        if (idx1 === 'l') {
-            setWidth(lstW - newDeltaX);
-            setLeft(lstX - (width.value - lstW));
-        }
-        else if (idx1 === 'r') {
-            setWidth(lstW + newDeltaX);
+        // 处理不同句柄位置的拖动逻辑
+        switch ("" + idx0 + idx1) {
+            case 'tl': // 左上角
+                setWidth(lstW - newDeltaX);
+                setLeft(lstX - (width.value - lstW));
+                setHeight(lstH - newDeltaY);
+                setTop(lstY - (height.value - lstH));
+                break;
+            case 'tm': // 顶部中间
+                newDeltaX = 0;
+                setHeight(lstH - newDeltaY);
+                setTop(lstY - (height.value - lstH));
+                break;
+            case 'tr': // 右上角
+                setWidth(lstW + newDeltaX);
+                setHeight(lstH - newDeltaY);
+                setTop(lstY - (height.value - lstH));
+                break;
+            case 'ml': // 左侧中间
+                newDeltaY = 0;
+                setWidth(lstW - newDeltaX);
+                setLeft(lstX - (width.value - lstW));
+                break;
+            case 'mr': // 右侧中间
+                newDeltaY = 0;
+                setWidth(lstW + newDeltaX);
+                break;
+            case 'bl': // 左下角
+                setWidth(lstW - newDeltaX);
+                setLeft(lstX - (width.value - lstW));
+                setHeight(lstH + newDeltaY);
+                break;
+            case 'bm': // 底部中间
+                newDeltaX = 0;
+                setHeight(lstH + newDeltaY);
+                break;
+            case 'br': // 右下角
+                setWidth(lstW + newDeltaX);
+                setHeight(lstH + newDeltaY);
+                break;
         }
         // ----------------
         // if (idx0 === 't') {
@@ -454,7 +498,7 @@ function initResizeHandle(containerProps, limitProps, parentSize, props, emit, c
             h: height.value
         });
         var newreferenceLineMap = utils_1.getReferenceLineMap(containerProvider, parentSize, id);
-        console.log('props', props);
+        // console.log('props', props);
         // 新增：吸附检测逻辑
         var THRESHOLD = props.THRESHOLD; // 吸附阈值
         var positionStore = containerProvider.getPositionStore(id);
@@ -568,16 +612,16 @@ function initResizeHandle(containerProps, limitProps, parentSize, props, emit, c
         setResizing(true);
         idx0 = handleType[0];
         idx1 = handleType[1];
-        if (aspectRatio.value) {
-            if (['tl', 'tm', 'ml', 'bl'].includes(handleType)) {
-                idx0 = 't';
-                idx1 = 'l';
-            }
-            else {
-                idx0 = 'b';
-                idx1 = 'r';
-            }
-        }
+        // if (aspectRatio.value) {
+        //   console.log('12313131213', idx0, idx1);
+        //   if (['tl', 'tm', 'ml', 'bl'].includes(handleType)) {
+        //     idx0 = 't';
+        //     idx1 = 'l';
+        //   } else {
+        //     idx0 = 'b';
+        //     idx1 = 'r';
+        //   }
+        // }
         var minHeight = props.minH;
         var minWidth = props.minW;
         if (minHeight / minWidth > aspectRatio.value) {

@@ -29,6 +29,10 @@ export const ALL_HANDLES: ResizingHandle[] = [
 ];
 
 const VdrProps = {
+  SCALE: {
+    type: Number,
+    default: 100,
+  },
   OFFSET: {
     //偏移量
     type: Number,
@@ -190,7 +194,8 @@ const VueDraggableResizable = defineComponent({
       emit,
       containerProvider,
       parentSize,
-      props.OFFSET
+      props.OFFSET,
+      props.SCALE
     );
     const resizeHandle = initResizeHandle(
       containerProps,

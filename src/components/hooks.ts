@@ -252,6 +252,9 @@ export function initLimitSizeAndMethods(
     setstepNum(val: number) {
       return props.OFFSET ? props.OFFSET : val;
     },
+    setScale(val: number) {
+      return props.SCALE ? props.SCALE / 100 : val / 100;
+    },
   };
   return {
     ...limitProps,
@@ -279,7 +282,8 @@ export function initDraggableContainer(
   emit: any,
   containerProvider: ContainerProvider | null,
   parentSize: ReturnType<typeof initParent>,
-  OFFSET: any
+  OFFSET: any,
+  SCALE: any
 ) {
   const { left: x, top: y, width: w, height: h, dragging, id } = containerProps;
   const {
@@ -288,7 +292,7 @@ export function initDraggableContainer(
     setResizing,
     setResizingHandle,
   } = containerProps;
-  const { setTop, setLeft, setstepNum } = limitProps;
+  const { setTop, setLeft, setstepNum, setScale } = limitProps;
   let lstX = 0;
   let lstY = 0;
   let lstPageX = 0;
@@ -334,8 +338,8 @@ export function initDraggableContainer(
     const multipleY = Math.round(deltaY / setstepNum(OFFSET));
 
     // 计算新的位置
-    let newLeft = lstX + multipleX * setstepNum(OFFSET);
-    let newTop = lstY + multipleY * setstepNum(OFFSET);
+    let newLeft = lstX + (multipleX * setstepNum(OFFSET)) / setScale(SCALE);
+    let newTop = lstY + (multipleY * setstepNum(OFFSET)) / setScale(SCALE);
 
     if (referenceLineMap !== null) {
       const widgetSelfLine = {

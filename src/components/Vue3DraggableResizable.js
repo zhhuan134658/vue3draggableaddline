@@ -34,6 +34,10 @@ exports.ALL_HANDLES = [
     'br',
 ];
 var VdrProps = {
+    SCALE: {
+        type: Number,
+        "default": 100
+    },
     OFFSET: {
         //偏移量
         type: Number,
@@ -182,7 +186,7 @@ var VueDraggableResizable = vue_1.defineComponent({
         var containerRef = vue_1.ref();
         var parentSize = hooks_1.initParent(containerRef);
         var limitProps = hooks_1.initLimitSizeAndMethods(props, parentSize, containerProps);
-        hooks_1.initDraggableContainer(containerRef, containerProps, limitProps, vue_1.toRef(props, 'draggable'), emit, containerProvider, parentSize, props.OFFSET);
+        hooks_1.initDraggableContainer(containerRef, containerProps, limitProps, vue_1.toRef(props, 'draggable'), emit, containerProvider, parentSize, props.OFFSET, props.SCALE);
         var resizeHandle = hooks_1.initResizeHandle(containerProps, limitProps, parentSize, props, emit, containerProvider);
         hooks_1.watchProps(props, limitProps);
         return __assign(__assign(__assign(__assign({ containerRef: containerRef,

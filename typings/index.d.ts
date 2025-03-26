@@ -12,6 +12,7 @@ declare const _default: ({
             h: number;
             draggable: boolean;
             resizable: boolean;
+            SCALE: number;
             OFFSET: number;
             THRESHOLD: number;
             initW: number;
@@ -39,6 +40,7 @@ declare const _default: ({
             h: number;
             draggable: boolean;
             resizable: boolean;
+            SCALE: number;
             OFFSET: number;
             THRESHOLD: number;
             initW: number;
@@ -76,6 +78,7 @@ declare const _default: ({
             h: number;
             draggable: boolean;
             resizable: boolean;
+            SCALE: number;
             OFFSET: number;
             THRESHOLD: number;
             initW: number;
@@ -103,6 +106,7 @@ declare const _default: ({
             setTop(val: number): number;
             setLeft(val: number): number;
             setstepNum(val: number): any;
+            setScale(val: number): number;
             minWidth: import("vue").ComputedRef<number>;
             minHeight: import("vue").ComputedRef<number>;
             maxWidth: import("vue").ComputedRef<number>;
@@ -153,6 +157,7 @@ declare const _default: ({
             h: number;
             draggable: boolean;
             resizable: boolean;
+            SCALE: number;
             OFFSET: number;
             THRESHOLD: number;
             initW: number;
@@ -184,6 +189,7 @@ declare const _default: ({
         h: number;
         draggable: boolean;
         resizable: boolean;
+        SCALE: number;
         OFFSET: number;
         THRESHOLD: number;
         initW: number;
@@ -211,6 +217,7 @@ declare const _default: ({
         setTop(val: number): number;
         setLeft(val: number): number;
         setstepNum(val: number): any;
+        setScale(val: number): number;
         minWidth: import("vue").ComputedRef<number>;
         minHeight: import("vue").ComputedRef<number>;
         maxWidth: import("vue").ComputedRef<number>;
@@ -265,6 +272,7 @@ declare const _default: ({
     h: number;
     draggable: boolean;
     resizable: boolean;
+    SCALE: number;
     OFFSET: number;
     THRESHOLD: number;
     initW: number;
@@ -292,6 +300,7 @@ declare const _default: ({
     setTop(val: number): number;
     setLeft(val: number): number;
     setstepNum(val: number): any;
+    setScale(val: number): number;
     minWidth: import("vue").ComputedRef<number>;
     minHeight: import("vue").ComputedRef<number>;
     maxWidth: import("vue").ComputedRef<number>;
@@ -342,6 +351,7 @@ declare const _default: ({
     h: number;
     draggable: boolean;
     resizable: boolean;
+    SCALE: number;
     OFFSET: number;
     THRESHOLD: number;
     initW: number;
@@ -375,6 +385,7 @@ declare const _default: ({
             h: number;
             draggable: boolean;
             resizable: boolean;
+            SCALE: number;
             OFFSET: number;
             THRESHOLD: number;
             initW: number;
@@ -402,6 +413,7 @@ declare const _default: ({
             h: number;
             draggable: boolean;
             resizable: boolean;
+            SCALE: number;
             OFFSET: number;
             THRESHOLD: number;
             initW: number;
@@ -439,6 +451,7 @@ declare const _default: ({
             h: number;
             draggable: boolean;
             resizable: boolean;
+            SCALE: number;
             OFFSET: number;
             THRESHOLD: number;
             initW: number;
@@ -466,6 +479,7 @@ declare const _default: ({
             setTop(val: number): number;
             setLeft(val: number): number;
             setstepNum(val: number): any;
+            setScale(val: number): number;
             minWidth: import("vue").ComputedRef<number>;
             minHeight: import("vue").ComputedRef<number>;
             maxWidth: import("vue").ComputedRef<number>;
@@ -516,6 +530,7 @@ declare const _default: ({
             h: number;
             draggable: boolean;
             resizable: boolean;
+            SCALE: number;
             OFFSET: number;
             THRESHOLD: number;
             initW: number;
@@ -547,6 +562,7 @@ declare const _default: ({
         h: number;
         draggable: boolean;
         resizable: boolean;
+        SCALE: number;
         OFFSET: number;
         THRESHOLD: number;
         initW: number;
@@ -574,6 +590,7 @@ declare const _default: ({
         setTop(val: number): number;
         setLeft(val: number): number;
         setstepNum(val: number): any;
+        setScale(val: number): number;
         minWidth: import("vue").ComputedRef<number>;
         minHeight: import("vue").ComputedRef<number>;
         maxWidth: import("vue").ComputedRef<number>;
@@ -628,6 +645,7 @@ declare const _default: ({
     h: number;
     draggable: boolean;
     resizable: boolean;
+    SCALE: number;
     OFFSET: number;
     THRESHOLD: number;
     initW: number;
@@ -655,6 +673,7 @@ declare const _default: ({
     setTop(val: number): number;
     setLeft(val: number): number;
     setstepNum(val: number): any;
+    setScale(val: number): number;
     minWidth: import("vue").ComputedRef<number>;
     minHeight: import("vue").ComputedRef<number>;
     maxWidth: import("vue").ComputedRef<number>;
@@ -705,6 +724,7 @@ declare const _default: ({
     h: number;
     draggable: boolean;
     resizable: boolean;
+    SCALE: number;
     OFFSET: number;
     THRESHOLD: number;
     initW: number;

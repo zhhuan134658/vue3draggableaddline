@@ -1,4 +1,8 @@
 declare const _default: import("vue").DefineComponent<{
+    showRedLine: {
+        type: BooleanConstructor;
+        default: boolean;
+    };
     allLines: {
         type: ArrayConstructor;
         default: any[];
@@ -30,6 +34,7 @@ declare const _default: import("vue").DefineComponent<{
 }, {
     matchedRows: import("vue").ComputedRef<number[]>;
     matchedCols: import("vue").ComputedRef<number[]>;
+    showLine: import("vue").ComputedRef<boolean>;
 }, unknown, {}, {
     renderReferenceLine(): any[];
 }, import("vue").ComponentOptionsMixin, import("vue").ComponentOptionsMixin, Record<string, any>, string, import("vue").VNodeProps & import("vue").AllowedComponentProps & import("vue").ComponentCustomProps, Readonly<{
@@ -37,6 +42,7 @@ declare const _default: import("vue").DefineComponent<{
     adsorbParent: boolean;
     adsorbCols: unknown[];
     adsorbRows: unknown[];
+    showRedLine: boolean;
     allLines: unknown[];
     referenceLineVisible: boolean;
     referenceLineColor: string;
@@ -45,6 +51,7 @@ declare const _default: import("vue").DefineComponent<{
     adsorbParent: boolean;
     adsorbCols: unknown[];
     adsorbRows: unknown[];
+    showRedLine: boolean;
     allLines: unknown[];
     referenceLineVisible: boolean;
     referenceLineColor: string;

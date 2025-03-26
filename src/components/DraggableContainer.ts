@@ -12,6 +12,10 @@ import { IDENTITY } from './utils';
 export default defineComponent({
   name: 'DraggableContainer',
   props: {
+    showRedLine: {
+      type: Boolean,
+      default: true,
+    },
     allLines: {
       type: Array,
       default: [],
@@ -42,7 +46,10 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const positionStore = reactive<PositionStore>({});
+    const showLine = computed(
+      () => props.allLines.length !== 0 && props.showRedLine
+    );
+    const positionStore = reactive<PositionStore>({}); // 代码位置：[DraggableContainer.ts](./src/components/DraggableContainer.ts#L10-L10)
     const updatePosition: UpdatePosition = (id: string, position: Position) => {
       positionStore[id] = position;
     };
@@ -80,6 +87,7 @@ export default defineComponent({
     return {
       matchedRows,
       matchedCols,
+      showLine,
     };
   },
   methods: {
@@ -116,40 +124,45 @@ export default defineComponent({
     },
   },
   render() {
-    const connectionLine = this.allLines.map((line: any) => {
-      return h(
-        'svg',
-        {
-          class: 'connection-line',
-          width: '100%',
-          height: '100%',
-        },
-        [
-          h('line', {
-            x1: line.start.x,
-            y1: line.start.y,
-            x2: line.end.x,
-            y2: line.end.y,
-            stroke: 'red',
-            strokeWidth: 1,
-          }),
-        ]
-      );
-    });
+    const connectionLine = this.showLine
+      ? this.allLines.map((line: any) => {
+          return h(
+            'svg',
+            {
+              class: 'connection-line',
+              width: '100%',
+              height: '100%',
+            },
+            [
+              h('line', {
+                x1: line.start.x,
+                y1: line.start.y,
+                x2: line.end.x,
+                y2: line.end.y,
+                stroke: 'red',
+                strokeWidth: 1,
+              }),
+            ]
+          );
+        })
+      : '';
 
-    const distanceLabels = this.allLines.map((line: any, index) => {
-      return h(
-        'div',
-        {
-          class: 'distance-label',
-          style: {
-            top: `${line.position.y}px`,
-            left: `${line.position.x}px`,
-          },
-        },
-        [line.distance]
-      );
-    });
+    const distanceLabels = this.showLine
+      ? this.allLines.map((line: any, index) => {
+          if (line.distance == 0) return null;
+          return h(
+            'div',
+            {
+              class: 'distance-label',
+              style: {
+                top: `${line.position.y}px`,
+                left: `${line.position.x}px`,
+              },
+            },
+            [line.distance]
+          );
+        })
+      : '';
     return h(
       'div',
       {

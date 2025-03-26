@@ -12,6 +12,10 @@ var utils_1 = require("./utils");
 exports["default"] = vue_1.defineComponent({
     name: 'DraggableContainer',
     props: {
+        showRedLine: {
+            type: Boolean,
+            "default": true
+        },
         allLines: {
             type: Array,
             "default": []
@@ -42,7 +46,8 @@ exports["default"] = vue_1.defineComponent({
         }
     },
     setup: function (props) {
-        var positionStore = vue_1.reactive({});
+        var showLine = vue_1.computed(function () { return props.allLines.length !== 0 && props.showRedLine; });
+        var positionStore = vue_1.reactive({}); // 代码位置：[DraggableContainer.ts](./src/components/DraggableContainer.ts#L10-L10)
         var updatePosition = function (id, position) {
             positionStore[id] = position;
         };
@@ -71,7 +76,8 @@ exports["default"] = vue_1.defineComponent({
         vue_1.provide('adsorbRows', props.adsorbRows || []);
         return {
             matchedRows: matchedRows,
-            matchedCols: matchedCols
+            matchedCols: matchedCols,
+            showLine: showLine
         };
     },
     methods: {
@@ -106,31 +112,37 @@ exports["default"] = vue_1.defineComponent({
         }
     },
     render: function () {
-        var connectionLine = this.allLines.map(function (line) {
-            return vue_1.h('svg', {
-                "class": 'connection-line',
-                width: '100%',
-                height: '100%'
-            }, [
-                vue_1.h('line', {
-                    x1: line.start.x,
-                    y1: line.start.y,
-                    x2: line.end.x,
-                    y2: line.end.y,
-                    stroke: 'red',
-                    strokeWidth: 1
-                }),
-            ]);
-        });
-        var distanceLabels = this.allLines.map(function (line, index) {
-            return vue_1.h('div', {
-                "class": 'distance-label',
-                style: {
-                    top: line.position.y + "px",
-                    left: line.position.x + "px"
-                }
-            }, [line.distance]);
-        });
+        var connectionLine = this.showLine
+            ? this.allLines.map(function (line) {
+                return vue_1.h('svg', {
+                    "class": 'connection-line',
+                    width: '100%',
+                    height: '100%'
+                }, [
+                    vue_1.h('line', {
+                        x1: line.start.x,
+                        y1: line.start.y,
+                        x2: line.end.x,
+                        y2: line.end.y,
+                        stroke: 'red',
+                        strokeWidth: 1
+                    }),
+                ]);
+            })
+            : '';
+        var distanceLabels = this.showLine
+            ? this.allLines.map(function (line, index) {
+                if (line.distance == 0)
+                    return null;
+                return vue_1.h('div', {
+                    "class": 'distance-label',
+                    style: {
+                        top: line.position.y + "px",
+                        left: line.position.x + "px"
+                    }
+                }, [line.distance]);
+            })
+            : '';
         return vue_1.h('div', {
             style: { width: '100%', height: '100%', position: 'relative' }
         }, __spreadArrays([
