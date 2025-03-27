@@ -255,6 +255,9 @@ export function initLimitSizeAndMethods(
     setScale(val: number) {
       return props.SCALE ? props.SCALE / 100 : val / 100;
     },
+    setBorderwidth(val: number) {
+      return props.BORDER_WIDTH ? props.BORDER_WIDTH : val;
+    },
   };
   return {
     ...limitProps,
@@ -273,7 +276,7 @@ function getPosition(e: HandleEvent) {
     return [e.pageX, e.pageY];
   }
 }
-const BORDER_WIDTH = 20; // 定义边框宽度
+const BORDER_WIDTH = 0; // 定义边框宽度
 export function initDraggableContainer(
   containerRef: Ref<HTMLElement | undefined>,
   containerProps: ReturnType<typeof initState>,
@@ -283,7 +286,8 @@ export function initDraggableContainer(
   containerProvider: ContainerProvider | null,
   parentSize: ReturnType<typeof initParent>,
   OFFSET: any,
-  SCALE: any
+  SCALE: any,
+  BORDER_WIDTH: any
 ) {
   const { left: x, top: y, width: w, height: h, dragging, id } = containerProps;
   const {
@@ -292,7 +296,7 @@ export function initDraggableContainer(
     setResizing,
     setResizingHandle,
   } = containerProps;
-  const { setTop, setLeft, setstepNum, setScale } = limitProps;
+  const { setTop, setLeft, setstepNum, setScale, setBorderwidth } = limitProps;
   let lstX = 0;
   let lstY = 0;
   let lstPageX = 0;
@@ -402,12 +406,15 @@ export function initDraggableContainer(
     const { clientX, clientY } = e as MouseEvent;
 
     // 判断鼠标点击位置是否在边框上
+
+    const newBorder = setBorderwidth(BORDER_WIDTH);
     const isOnBorder =
-      (clientX >= rect.left && clientX <= rect.left + BORDER_WIDTH) ||
-      (clientX >= rect.right - BORDER_WIDTH && clientX <= rect.right) ||
-      (clientY >= rect.top && clientY <= rect.top + BORDER_WIDTH) ||
-      (clientY >= rect.bottom - BORDER_WIDTH && clientY <= rect.bottom);
-    console.log('isOnBorder', isOnBorder);
+      (clientX >= rect.left && clientX <= rect.left + newBorder) ||
+      (clientX >= rect.right - newBorder && clientX <= rect.right) ||
+      (clientY >= rect.top && clientY <= rect.top + newBorder) ||
+      (clientY >= rect.bottom - newBorder && clientY <= rect.bottom) ||
+      newBorder == 0;
+    // console.log('isOnBorder', isOnBorder);
 
     if (isOnBorder) {
       setDragging(true);

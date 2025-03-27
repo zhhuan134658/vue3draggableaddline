@@ -29,17 +29,23 @@ export const ALL_HANDLES: ResizingHandle[] = [
 ];
 
 const VdrProps = {
+  BORDER_WIDTH: {
+    //可拖拽区域- 边框宽度内，0为全部可拖拽
+    type: Number,
+    default: 0,
+  },
   SCALE: {
+    //缩放比例-同步canvas背景缩放时的鼠标指针移动
     type: Number,
     default: 100,
   },
   OFFSET: {
-    //偏移量
+    //偏移量-拖拽以及缩放元素时的单位移动量
     type: Number,
     default: 10,
   },
   THRESHOLD: {
-    //吸附灵敏度、吸附阈值
+    //吸附灵敏度-对其辅助线的吸附阈值-
     type: Number,
     default: 5,
   },
@@ -195,7 +201,8 @@ const VueDraggableResizable = defineComponent({
       containerProvider,
       parentSize,
       props.OFFSET,
-      props.SCALE
+      props.SCALE,
+      props.BORDER_WIDTH
     );
     const resizeHandle = initResizeHandle(
       containerProps,

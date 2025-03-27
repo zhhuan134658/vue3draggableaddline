@@ -37,7 +37,8 @@
           v-model:h="item.height"
           :OFFSET="item.OFFSET"
           :THRESHOLD="item.THRESHOLD"
-          :SCALE="50"
+          :SCALE="100"
+          :BORDER_WIDTH="BORDER_WIDTH"
           v-model:active="item.active"
           :draggable="item.draggable"
           :resizable="item.resizable"
@@ -112,7 +113,7 @@ export default defineComponent({
           THRESHOLD: 5, //吸附灵敏度、吸附阈值
         },
       ],
-
+      BORDER_WIDTH: 0,
       allLines: [],
       sx: 100,
       sy: 100,
@@ -132,6 +133,8 @@ export default defineComponent({
     setStep() {
       this.totalWidth += 100;
       this.totalHeight += 100;
+
+      this.BORDER_WIDTH = 20;
     },
     //拖拽中
     onDragging(currentIndex) {
