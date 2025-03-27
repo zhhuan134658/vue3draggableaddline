@@ -3,6 +3,10 @@ import './index.css';
 import { ResizingHandle, ContainerProvider } from './types';
 export declare const ALL_HANDLES: ResizingHandle[];
 declare const VueDraggableResizable: import("vue").DefineComponent<{
+    BORDER_WIDTH: {
+        type: NumberConstructor;
+        default: number;
+    };
     SCALE: {
         type: NumberConstructor;
         default: number;
@@ -121,6 +125,7 @@ declare const VueDraggableResizable: import("vue").DefineComponent<{
     setLeft(val: number): number;
     setstepNum(val: number): any;
     setScale(val: number): number;
+    setBorderwidth(val: number): any;
     minWidth: import("vue").ComputedRef<number>;
     minHeight: import("vue").ComputedRef<number>;
     maxWidth: import("vue").ComputedRef<number>;
@@ -171,6 +176,7 @@ declare const VueDraggableResizable: import("vue").DefineComponent<{
     h: number;
     draggable: boolean;
     resizable: boolean;
+    BORDER_WIDTH: number;
     SCALE: number;
     OFFSET: number;
     THRESHOLD: number;
@@ -199,6 +205,7 @@ declare const VueDraggableResizable: import("vue").DefineComponent<{
     h: number;
     draggable: boolean;
     resizable: boolean;
+    BORDER_WIDTH: number;
     SCALE: number;
     OFFSET: number;
     THRESHOLD: number;

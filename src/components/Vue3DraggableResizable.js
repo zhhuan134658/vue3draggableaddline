@@ -34,17 +34,23 @@ exports.ALL_HANDLES = [
     'br',
 ];
 var VdrProps = {
+    BORDER_WIDTH: {
+        //可拖拽区域- 边框宽度内，0为全部可拖拽
+        type: Number,
+        "default": 0
+    },
     SCALE: {
+        //缩放比例-同步canvas背景缩放时的鼠标指针移动
         type: Number,
         "default": 100
     },
     OFFSET: {
-        //偏移量
+        //偏移量-拖拽以及缩放元素时的单位移动量
         type: Number,
         "default": 10
     },
     THRESHOLD: {
-        //吸附灵敏度、吸附阈值
+        //吸附灵敏度-对其辅助线的吸附阈值-
         type: Number,
         "default": 5
     },
@@ -186,7 +192,7 @@ var VueDraggableResizable = vue_1.defineComponent({
         var containerRef = vue_1.ref();
         var parentSize = hooks_1.initParent(containerRef);
         var limitProps = hooks_1.initLimitSizeAndMethods(props, parentSize, containerProps);
-        hooks_1.initDraggableContainer(containerRef, containerProps, limitProps, vue_1.toRef(props, 'draggable'), emit, containerProvider, parentSize, props.OFFSET, props.SCALE);
+        hooks_1.initDraggableContainer(containerRef, containerProps, limitProps, vue_1.toRef(props, 'draggable'), emit, containerProvider, parentSize, props.OFFSET, props.SCALE, props.BORDER_WIDTH);
         var resizeHandle = hooks_1.initResizeHandle(containerProps, limitProps, parentSize, props, emit, containerProvider);
         hooks_1.watchProps(props, limitProps);
         return __assign(__assign(__assign(__assign({ containerRef: containerRef,

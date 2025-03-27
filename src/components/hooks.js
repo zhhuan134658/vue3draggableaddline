@@ -212,6 +212,9 @@ function initLimitSizeAndMethods(props, parentSize, containerProps) {
         },
         setScale: function (val) {
             return props.SCALE ? props.SCALE / 100 : val / 100;
+        },
+        setBorderwidth: function (val) {
+            return props.BORDER_WIDTH ? props.BORDER_WIDTH : val;
         }
     };
     return __assign(__assign({}, limitProps), limitMethods);
@@ -228,11 +231,11 @@ function getPosition(e) {
         return [e.pageX, e.pageY];
     }
 }
-var BORDER_WIDTH = 20; // 定义边框宽度
-function initDraggableContainer(containerRef, containerProps, limitProps, draggable, emit, containerProvider, parentSize, OFFSET, SCALE) {
+var BORDER_WIDTH = 0; // 定义边框宽度
+function initDraggableContainer(containerRef, containerProps, limitProps, draggable, emit, containerProvider, parentSize, OFFSET, SCALE, BORDER_WIDTH) {
     var x = containerProps.left, y = containerProps.top, w = containerProps.width, h = containerProps.height, dragging = containerProps.dragging, id = containerProps.id;
     var setDragging = containerProps.setDragging, setEnable = containerProps.setEnable, setResizing = containerProps.setResizing, setResizingHandle = containerProps.setResizingHandle;
-    var setTop = limitProps.setTop, setLeft = limitProps.setLeft, setstepNum = limitProps.setstepNum, setScale = limitProps.setScale;
+    var setTop = limitProps.setTop, setLeft = limitProps.setLeft, setstepNum = limitProps.setstepNum, setScale = limitProps.setScale, setBorderwidth = limitProps.setBorderwidth;
     var lstX = 0;
     var lstY = 0;
     var lstPageX = 0;
@@ -341,11 +344,13 @@ function initDraggableContainer(containerRef, containerProps, limitProps, dragga
         var rect = el.getBoundingClientRect();
         var _a = e, clientX = _a.clientX, clientY = _a.clientY;
         // 判断鼠标点击位置是否在边框上
-        var isOnBorder = (clientX >= rect.left && clientX <= rect.left + BORDER_WIDTH) ||
-            (clientX >= rect.right - BORDER_WIDTH && clientX <= rect.right) ||
-            (clientY >= rect.top && clientY <= rect.top + BORDER_WIDTH) ||
-            (clientY >= rect.bottom - BORDER_WIDTH && clientY <= rect.bottom);
-        console.log('isOnBorder', isOnBorder);
+        var newBorder = setBorderwidth(BORDER_WIDTH);
+        var isOnBorder = (clientX >= rect.left && clientX <= rect.left + newBorder) ||
+            (clientX >= rect.right - newBorder && clientX <= rect.right) ||
+            (clientY >= rect.top && clientY <= rect.top + newBorder) ||
+            (clientY >= rect.bottom - newBorder && clientY <= rect.bottom) ||
+            newBorder == 0;
+        // console.log('isOnBorder', isOnBorder);
         if (isOnBorder) {
             setDragging(true);
             lstX = x.value;
