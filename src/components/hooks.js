@@ -397,7 +397,7 @@ exports.initDraggableContainer = initDraggableContainer;
 function initResizeHandle(containerProps, limitProps, parentSize, props, emit, containerProvider // 新增参数，用于设置匹配线
 ) {
     var id = containerProps.id;
-    var setWidth = limitProps.setWidth, setHeight = limitProps.setHeight, setLeft = limitProps.setLeft, setTop = limitProps.setTop;
+    var setWidth = limitProps.setWidth, setHeight = limitProps.setHeight, setLeft = limitProps.setLeft, setTop = limitProps.setTop, setScale = limitProps.setScale;
     var width = containerProps.width, height = containerProps.height, left = containerProps.left, top = containerProps.top, aspectRatio = containerProps.aspectRatio;
     var setResizing = containerProps.setResizing, setResizingHandle = containerProps.setResizingHandle, setResizingMaxWidth = containerProps.setResizingMaxWidth, setResizingMaxHeight = containerProps.setResizingMaxHeight, setResizingMinWidth = containerProps.setResizingMinWidth, setResizingMinHeight = containerProps.setResizingMinHeight;
     var parentWidth = parentSize.parentWidth, parentHeight = parentSize.parentHeight;
@@ -439,8 +439,8 @@ function initResizeHandle(containerProps, limitProps, parentSize, props, emit, c
         var multipleX = Math.round(deltaX / props.OFFSET);
         var multipleY = Math.round(deltaY / props.OFFSET);
         // 计算新的宽度和高度变化量
-        var newDeltaX = multipleX * props.OFFSET;
-        var newDeltaY = multipleY * props.OFFSET;
+        var newDeltaX = (multipleX * props.OFFSET) / setScale(props.SCALE);
+        var newDeltaY = (multipleY * props.OFFSET) / setScale(props.SCALE);
         // 处理不同句柄位置的拖动逻辑
         switch ("" + idx0 + idx1) {
             case 'tl': // 左上角

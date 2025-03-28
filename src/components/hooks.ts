@@ -474,7 +474,7 @@ export function initResizeHandle(
 ) {
   const { id } = containerProps;
 
-  const { setWidth, setHeight, setLeft, setTop } = limitProps;
+  const { setWidth, setHeight, setLeft, setTop, setScale } = limitProps;
   const { width, height, left, top, aspectRatio } = containerProps;
   const {
     setResizing,
@@ -525,8 +525,8 @@ export function initResizeHandle(
     const multipleY = Math.round(deltaY / props.OFFSET);
 
     // 计算新的宽度和高度变化量
-    let newDeltaX = multipleX * props.OFFSET;
-    let newDeltaY = multipleY * props.OFFSET;
+    let newDeltaX = (multipleX * props.OFFSET) / setScale(props.SCALE);
+    let newDeltaY = (multipleY * props.OFFSET) / setScale(props.SCALE);
     // 处理不同句柄位置的拖动逻辑
     switch (`${idx0}${idx1}`) {
       case 'tl': // 左上角
