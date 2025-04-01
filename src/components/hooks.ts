@@ -40,7 +40,9 @@ export function initState(props: any, emit: any) {
   const [resizingMinHeight, setResizingMinHeight] = useState<number>(
     props.minH
   );
+
   const aspectRatio = computed(() => height.value / width.value);
+
   watch(
     width,
     (newVal) => {
@@ -250,7 +252,9 @@ export function initLimitSizeAndMethods(
       );
     },
     setstepNum(val: number) {
-      return props.OFFSET ? props.OFFSET : val;
+      return props.OFFSET
+        ? (props.OFFSET * props.SCALE) / 100
+        : (val * props.SCALE) / 100;
     },
     setScale(val: number) {
       return props.SCALE ? props.SCALE / 100 : val / 100;
@@ -732,23 +736,14 @@ export function initResizeHandle(
     idx0 = handleType[0];
     idx1 = handleType[1];
 
-    // if (aspectRatio.value) {
-    //   console.log('12313131213', idx0, idx1);
-
-    //   if (['tl', 'tm', 'ml', 'bl'].includes(handleType)) {
-    //     idx0 = 't';
-    //     idx1 = 'l';
-    //   } else {
-    //     idx0 = 'b';
-    //     idx1 = 'r';
-    //   }
-    // }
     let minHeight = props.minH as number;
     let minWidth = props.minW as number;
-    if (minHeight / minWidth > aspectRatio.value) {
-      minWidth = minHeight / aspectRatio.value;
-    } else {
-      minHeight = minWidth * aspectRatio.value;
+    if (props.lockAspectRatio) {
+      if (minHeight / minWidth > aspectRatio.value) {
+        minWidth = minHeight / aspectRatio.value;
+      } else {
+        minHeight = minWidth * aspectRatio.value;
+      }
     }
     setResizingMinWidth(minWidth);
     setResizingMinHeight(minHeight);

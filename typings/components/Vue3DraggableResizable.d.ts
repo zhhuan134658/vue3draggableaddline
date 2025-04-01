@@ -123,7 +123,7 @@ declare const VueDraggableResizable: import("vue").DefineComponent<{
     setHeight(val: number): number;
     setTop(val: number): number;
     setLeft(val: number): number;
-    setstepNum(val: number): any;
+    setstepNum(val: number): number;
     setScale(val: number): number;
     setBorderwidth(val: number): any;
     minWidth: import("vue").ComputedRef<number>;

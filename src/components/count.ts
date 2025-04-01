@@ -149,7 +149,7 @@ export function getArrayItemById(id: any, array: any) {
 }
 
 // 获取svg各个起始点和结束点
-export function getStartAndEnd(currentItem: any, items: any) {
+export function getStartAndEnd(currentItem: any, items: any, scale?: any) {
   const currentRect = currentItem;
   const newLines: any = [];
   items.forEach((item: any, i: any) => {

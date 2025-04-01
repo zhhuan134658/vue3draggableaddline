@@ -208,7 +208,9 @@ function initLimitSizeAndMethods(props, parentSize, containerProps) {
             return setLeft(Math.min(limitProps.maxLeft.value, Math.max(limitProps.minLeft.value, val)));
         },
         setstepNum: function (val) {
-            return props.OFFSET ? props.OFFSET : val;
+            return props.OFFSET
+                ? (props.OFFSET * props.SCALE) / 100
+                : (val * props.SCALE) / 100;
         },
         setScale: function (val) {
             return props.SCALE ? props.SCALE / 100 : val / 100;
@@ -412,7 +414,7 @@ function initResizeHandle(containerProps, limitProps, parentSize, props, emit, c
     var idx1 = '';
     var documentElement = document.documentElement;
     var resizeHandleDrag = function (e) {
-        e.preventDefault();
+        // e.preventDefault();
         var _a = getPosition(e), _pageX = _a[0], _pageY = _a[1];
         var deltaX = _pageX - lstPageX;
         var deltaY = _pageY - lstPageY;
@@ -617,23 +619,15 @@ function initResizeHandle(containerProps, limitProps, parentSize, props, emit, c
         setResizing(true);
         idx0 = handleType[0];
         idx1 = handleType[1];
-        // if (aspectRatio.value) {
-        //   console.log('12313131213', idx0, idx1);
-        //   if (['tl', 'tm', 'ml', 'bl'].includes(handleType)) {
-        //     idx0 = 't';
-        //     idx1 = 'l';
-        //   } else {
-        //     idx0 = 'b';
-        //     idx1 = 'r';
-        //   }
-        // }
         var minHeight = props.minH;
         var minWidth = props.minW;
-        if (minHeight / minWidth > aspectRatio.value) {
-            minWidth = minHeight / aspectRatio.value;
-        }
-        else {
-            minHeight = minWidth * aspectRatio.value;
+        if (props.lockAspectRatio) {
+            if (minHeight / minWidth > aspectRatio.value) {
+                minWidth = minHeight / aspectRatio.value;
+            }
+            else {
+                minHeight = minWidth * aspectRatio.value;
+            }
         }
         setResizingMinWidth(minWidth);
         setResizingMinHeight(minHeight);
