@@ -223,8 +223,11 @@ var VueDraggableResizable = vue_1.defineComponent({
             return;
         this.containerRef.ondragstart = function () { return false; };
         var _a = utils_1.getElSize(this.containerRef), width = _a.width, height = _a.height;
-        this.setWidth(this.initW === null ? this.w || width : this.initW);
-        this.setHeight(this.initH === null ? this.h || height : this.initH);
+        console.log('width', width, 'height', height);
+        // this.setWidth(this.initW === null ? this.w || width : this.initW);
+        // this.setHeight(this.initH === null ? this.h || height : this.initH);
+        this.setWidth(width);
+        this.setHeight(height);
         if (this.containerProvider) {
             this.containerProvider.updatePosition(this.id, {
                 x: this.left,

@@ -29,8 +29,8 @@
       <DraggableContainer :allLines="allLines" :showRedLine="showRedLine">
         <Vue3DraggableResizable
           v-for="(item, index) in items"
-          :initW="40"
-          :initH="80"
+          :initW="item.width"
+          :initH="item.height"
           v-model:x="item.x"
           v-model:y="item.y"
           v-model:w="item.width"
@@ -85,15 +85,15 @@ export default defineComponent({
   data() {
     return {
       showRedLine: false, //是否显示吸附线
-      totalWidth: 500,
-      totalHeight: 500,
+      totalWidth: 1000,
+      totalHeight: 1000,
       items: [
         {
           id: 1,
           x: 100,
           y: 100,
-          height: 200,
-          width: 200,
+          height: 100,
+          width: 100,
           active: false,
           draggable: true,
           resizable: true,

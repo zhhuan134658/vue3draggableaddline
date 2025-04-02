@@ -24,8 +24,8 @@ function useState(initialState) {
 }
 exports.useState = useState;
 function initState(props, emit) {
-    var _a = useState(props.initW), width = _a[0], setWidth = _a[1];
-    var _b = useState(props.initH), height = _b[0], setHeight = _b[1];
+    var _a = useState(props.w), width = _a[0], setWidth = _a[1];
+    var _b = useState(props.h), height = _b[0], setHeight = _b[1];
     var _c = useState(props.x), left = _c[0], setLeft = _c[1];
     var _d = useState(props.y), top = _d[0], setTop = _d[1];
     var _e = useState(props.active), enable = _e[0], setEnable = _e[1];
@@ -248,7 +248,7 @@ function initDraggableContainer(containerRef, containerProps, limitProps, dragga
         var _a;
         var target = e.target;
         if (!((_a = containerRef.value) === null || _a === void 0 ? void 0 : _a.contains(target))) {
-            setEnable(false);
+            //   setEnable(false);
             setDragging(false);
             setResizing(false);
             setResizingHandle('');
@@ -414,7 +414,7 @@ function initResizeHandle(containerProps, limitProps, parentSize, props, emit, c
     var idx1 = '';
     var documentElement = document.documentElement;
     var resizeHandleDrag = function (e) {
-        // e.preventDefault();
+        e.preventDefault();
         var _a = getPosition(e), _pageX = _a[0], _pageY = _a[1];
         var deltaX = _pageX - lstPageX;
         var deltaY = _pageY - lstPageY;

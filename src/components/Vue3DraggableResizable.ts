@@ -172,6 +172,7 @@ const VueDraggableResizable = defineComponent({
   emits: emits,
   setup(props, { emit }) {
     const containerProps = initState(props, emit);
+
     const provideIdentity = inject('identity');
     let containerProvider: ContainerProvider | null = null;
     if (provideIdentity === IDENTITY) {
@@ -245,8 +246,15 @@ const VueDraggableResizable = defineComponent({
     if (!this.containerRef) return;
     this.containerRef.ondragstart = () => false;
     const { width, height } = getElSize(this.containerRef);
-    this.setWidth(this.initW === null ? this.w || width : this.initW);
-    this.setHeight(this.initH === null ? this.h || height : this.initH);
+    console.log('width', width, 'height', height);
+
+
+    // this.setWidth(this.initW === null ? this.w || width : this.initW);
+    // this.setHeight(this.initH === null ? this.h || height : this.initH);
+
+
+    this.setWidth(width);
+    this.setHeight(height);
     if (this.containerProvider) {
       this.containerProvider.updatePosition(this.id, {
         x: this.left,

@@ -26,8 +26,8 @@ export function useState<T>(initialState: T): [Ref<T>, (value: T) => T] {
 }
 
 export function initState(props: any, emit: any) {
-  const [width, setWidth] = useState<number>(props.initW);
-  const [height, setHeight] = useState<number>(props.initH);
+  const [width, setWidth] = useState<number>(props.w);
+  const [height, setHeight] = useState<number>(props.h);
   const [left, setLeft] = useState<number>(props.x);
   const [top, setTop] = useState<number>(props.y);
   const [enable, setEnable] = useState<boolean>(props.active);
@@ -311,7 +311,7 @@ export function initDraggableContainer(
   const _unselect = (e: HandleEvent) => {
     const target = e.target;
     if (!containerRef.value?.contains(<Node>target)) {
-      setEnable(false);
+      //   setEnable(false);
       setDragging(false);
       setResizing(false);
       setResizingHandle('');
